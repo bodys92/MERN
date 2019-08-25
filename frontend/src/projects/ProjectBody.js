@@ -40,9 +40,17 @@ export default class ProjectBody extends React.Component {
 
 	
 	render() {
+		const visible = this.state.tasksVisible; 
+		let tasks = <div className="card m-3 p-3">
+					<TaskTableHeader/>
+						<div className="card-body">
+					{this.renderTaskList()}
+					<button className="btn btn-primary btn-block">Add new task</button>
+						</div>
+					</div>
 		return (
 			<div>
-				<div className={this.state.tasksVisible ? "bg-primary row" : "row"} onClick={this.handleClick}>
+				<div className={this.state.tasksVisible ? "alert alert-primary row" : "alert alert-secondary row"} onClick={this.handleClick}>
 						<div className="col" >{this.props.projectIndex + 1}</div>
 						<div className="col-3" >{this.props.project.name}</div>
 						<div className="col-3" >{this.props.project.category}</div>
@@ -50,11 +58,7 @@ export default class ProjectBody extends React.Component {
 						<div className="col" >{formatDate(this.props.project.dateAdded)}</div>
 						<div className="col" >{this.props.project.totalTime}</div>
 				</div>
-				{this.state.tasksVisible ? <TaskTableHeader/>:''}
-				{this.state.tasksVisible ? <hr/>:''}
-				{this.state.tasksVisible ? this.renderTaskList():''}
-				{this.state.tasksVisible ? <hr/>:''}
-				{this.state.tasksVisible ? <button className="btn btn-primary btn-block">Add new task</button>:''}
+				{this.state.tasksVisible ? tasks:''}
 			</div>
 		);
 	}
