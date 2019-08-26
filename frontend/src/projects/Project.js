@@ -1,10 +1,10 @@
 import React from 'react';
 import {ApiGet} from '../common/Api';
-import ProjectsTableHeader from './ProjectsTableHeader';
+import ProjectsHeader from './ProjectsHeader';
 import ProjectBody from './ProjectBody';
 
 
-export default class ProjectIndex extends React.Component {
+export default class Project extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -45,12 +45,12 @@ export default class ProjectIndex extends React.Component {
 				</div>
 				<div className="row">
 						<div className="col-8 ml-auto mr-auto">
-								<ProjectsTableHeader/>
+								<ProjectsHeader/>
 								<hr/>
-								{this.state.projects.map((project, projectIndex) => 
-									<ProjectBody 	key={projectIndex} 
+								{this.state.projects.map((project, index) => 
+									<ProjectBody 	key={index} 
 													project={project} 
-													projectIndex={projectIndex} 
+													projectIndex={index} 
 													totalTime={this.getTotalTime(project)}/> )}
 						</div>
 				</div>

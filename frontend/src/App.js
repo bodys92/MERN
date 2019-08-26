@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import ProjectIndex from './projects/ProjectIndex';
+import Project from './projects/Project';
 
 function App() {
   return (
     <div className="container-fluid">
-    	<ProjectIndex/>
+    	<Project/>
     </div>
   );
 }
