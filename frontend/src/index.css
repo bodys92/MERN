@@ -15,3 +15,7 @@ code {
 .unAvailable {
 	text-decoration: line-through;
 }
+
+.label-override {
+	display: inline;
+}

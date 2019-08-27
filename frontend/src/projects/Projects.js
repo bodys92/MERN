@@ -4,7 +4,7 @@ import ProjectsHeader from './ProjectsHeader';
 import ProjectBody from './ProjectBody';
 
 
-export default class Project extends React.Component {
+export default class Projects extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -22,12 +22,8 @@ export default class Project extends React.Component {
 	}
 
 	getTotalTime(project) {
-		ApiGet(`/api/project/${project._id}/tasksTime`)
+		ApiGet(`/api/project/${project._id}/taskstime`)
 				.then(time => time)
-	}
-
-	renderProjectForm() {
-		
 	}
 
 	render() {
@@ -50,8 +46,7 @@ export default class Project extends React.Component {
 								{this.state.projects.map((project, index) => 
 									<ProjectBody 	key={index} 
 													project={project} 
-													projectIndex={index} 
-													totalTime={this.getTotalTime(project)}/> )}
+													projectIndex={index}/> )}
 						</div>
 				</div>
 			</div>

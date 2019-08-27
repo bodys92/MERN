@@ -156,27 +156,48 @@ app.get('/api/project/:id/tasks', (req, res) => {
   })
 })
 
-// post tasks to project
+// create tasks in project
 app.post('/api/project/:id/task', (req, res) => {
   req.body.belongTo = req.params.id;
   const {error} = validateTask(req.body);
   if (error) {
     return res.status(400).json(error.message);
-  };
+  }
   Task.create(req.body, (err, task) => {
-    if (err){
+    if (err) {
       return res.status(400).json(err);
-    };
-    Project.findById(req.params.id, (err, project) =>{
+    }
+    Project.findById(req.params.id, (err, project) => {
       if (err) {
         return res.status(400).json(err);
       }
       project.tasks.push(task);
-      return project.save();
+      project.save();
+      return
     })
-    return (res.status(200).send("ok"))
-  });
-});
+    return res.status(200).json(task)
+  })
+})
+
+app.get('/api/project/:id/taskstime', (req, res) => {
+  Project.findById(req.params.id, (err, project) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+    Task.find({belongTo: project["_id"]}, (err, tasks) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+    const counter = [];
+    counter.push(tasks.map(task => task.time));
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const totalTime = counter.reduce(reducer);
+    return res.status(200).json(totalTime);
+    })
+  })
+})
+
+
 
 // methods
 const port = 5000

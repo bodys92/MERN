@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import Project from './projects/Project';
+import Projects from './projects/Projects';
 
 function App() {
   return (
     <div className="container-fluid">
-    	<Project/>
+    	<Projects/>
     </div>
   );
 }
