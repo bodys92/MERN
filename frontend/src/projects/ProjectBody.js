@@ -1,21 +1,22 @@
 import React from 'react';
-import {formatDate} from '../common/DateHelper';
-import Tasks from '../tasks/Tasks';
+import {formatDate} from '../common/FormatHelper.js';
+import Task from '../tasks/Task';
 import {ApiGet} from '../common/Api';
+import {formatTime} from '../common/FormatHelper.js';
 
 export default class ProjectBody extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 				tasksVisible: false,
-				openProjectId: 0,
+				projectId: 0,
 				tasksCounter: this.props.project.tasks.length,
 				totalTime: []
 			};
 
 		this.showTasks = this.showTasks.bind(this);
-		this.updateTasksCount = this.updateTasksCount.bind(this);
-		this.updateTasksTime = this.updateTasksTime.bind(this);
+		this.updateTasksCounter = this.updateTasksCounter.bind(this);
+		this.updateTasksTimer = this.updateTasksTimer.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,44 +24,46 @@ export default class ProjectBody extends React.Component {
 			.then(data => {
 				this.setState({totalTime:data});
 			})
-
-
 	}
 
 	showTasks() {
 		if (!this.state.tasksVisible){
 			this.setState({
 				tasksVisible: true,
-				openProjectId: this.props.project._id
+				projectId: this.props.project._id
 			});
 		} else {
 			this.setState({
 				tasksVisible: false,
-				openProjectId: 0
+				projectId: 0
 			});
 		}
 	}
 
-	updateTasksCount() {
+	updateTasksCounter() {
 		this.setState({
 			tasksCounter: this.state.tasksCounter + 1
 		});
 	}
 
-	updateTasksTime(time) {
+	updateTasksTimer(time) {
 		const newState = this.state.totalTime;
 		newState.push(time);
 		this.setState({
 			totalTime: newState
 		});
 	}
-
 	
 	render() {
-		const openProjectId = this.state.openProjectId;
-		const renderTasks = <Tasks 	updateTasksCount={this.updateTasksCount} 
-									openProjectId={openProjectId}
-									updateTasksTime={this.updateTasksTime}/>
+		const projectId = this.state.projectId;
+
+		const renderTasks = () => {
+			return (						
+					<Task 		updateTasksCounter={this.updateTasksCounter} 
+								projectId={projectId}
+								updateTasksTimer={this.updateTasksTimer}/>
+				);
+		}
 
 		const totalTimeSum = this.state.totalTime.reduce((a,b) => a + b, 0)
 
@@ -73,9 +76,9 @@ export default class ProjectBody extends React.Component {
 						<div className="col-2" >{this.props.project.category}</div>
 						<div className="col-2" >{this.state.tasksCounter}</div>
 						<div className="col" >{formatDate(this.props.project.dateAdded)}</div>
-						<div className="col" >{totalTimeSum}</div>
+						<div className="col" >{formatTime(totalTimeSum)}</div>
 				</div>
-				{this.state.tasksVisible ? renderTasks : ''}
+				{this.state.tasksVisible ? renderTasks() : ''}
 			</div>
 		);
 	}

@@ -73,23 +73,27 @@ export default class TaskForm extends React.PureComponent {
 								name="taskTitle"
 								value={taskTitle}
 								onChange={this.handleChange}
+								maxlength="24"
 								required/>
 						<small 	id="imputTitleHelp" 
-								className="form-text text-muted">Enter job title</small>
+								className="form-text text-muted">Enter task title
+						</small>
 					</label>
 				</div>
 				<div className="form-group">
-					<label className="label-override">Describe
+					<label className="label-override">Description
 						<input 	type="text" 
 								className="form-control" 
 								id="inputDesc" 
-								placeholder="Describe"
+								placeholder="Description"
 								name="taskDesc"
 								value={taskDesc}
 								onChange={this.handleChange}
+								maxlength="255"
 								required/>
 						<small 	id="imputDescHelp" 
-								className="form-text text-muted">Enter job title</small>
+								className="form-text text-muted">Enter task description
+						</small>
 					</label>
 				</div>
 				<div className="form-group">
@@ -102,6 +106,9 @@ export default class TaskForm extends React.PureComponent {
 								value={taskTime}
 								onChange={this.handleChange}
 								required/>
+						<small 	id="imputTitleHelp" 
+								className="form-text text-muted">Time in minutes
+						</small>
 					</label>
 				</div>
 
